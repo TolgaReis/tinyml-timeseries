@@ -133,15 +133,7 @@ Generates a `model_data.h` C header file containing the model as a byte array, r
 
 ## Notebooks
 
-The `notebooks/` directory contains interactive Jupyter notebooks that walk through each stage:
-
-| Notebook | Description |
-|----------|-------------|
-| `01_data_exploration.ipynb` | Visualize and understand the raw time-series dataset |
-| `02_model_training.ipynb` | Train and evaluate a baseline classifier |
-| `03_quantization.ipynb` | Apply post-training quantization and compare accuracy |
-| `04_benchmarking.ipynb` | Analyze the accuracy / latency / model-size trade-off |
-| `05_firmware_export.ipynb` | Generate C headers and prepare the firmware integration |
+The `notebooks/` directory contains interactive Jupyter notebooks that walk through each stage.
 
 ---
 
@@ -150,9 +142,6 @@ The `notebooks/` directory contains interactive Jupyter notebooks that walk thro
 | Board | Architecture | Flash | RAM | Supported |
 |-------|-------------|-------|-----|-----------|
 | ESP32 | Xtensa LX6 (240 MHz) | 4 MB | 520 KB | ✅ |
-| Arduino Nano 33 BLE Sense | ARM Cortex-M4 (64 MHz) | 1 MB | 256 KB | ✅ |
-| STM32 Cortex-M series | ARM Cortex-M0 to M7 | Varies | Varies | ✅ |
-| Raspberry Pi Pico | ARM Cortex-M0+ | 2 MB | 264 KB | ✅ |
 
 ---
 
@@ -185,16 +174,6 @@ Please make sure new experiments are reproducible and documented.
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
----
-
-## Acknowledgements
-
-This repository draws inspiration from the broader TinyML community and research on efficient deep learning for embedded systems. Key references include:
-
-- [TensorFlow Lite for Microcontrollers](https://www.tensorflow.org/lite/microcontrollers)
-- [Edge Impulse](https://edgeimpulse.com/)
-- [MCUNet: Tiny Deep Learning on IoT Devices (NeurIPS 2020)](https://arxiv.org/abs/2007.10319)
 
 ---
 
