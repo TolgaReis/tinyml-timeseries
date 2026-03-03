@@ -28,33 +28,33 @@ def clean_nan_inf(X):
     return X_clean
 
 
-def clean_train_test(X_train, X_test):
+def clean_train_test(X_train, X_test, X_val=None):
     """
     Clean both train and test sets.
     """
-
     X_train = clean_nan_inf(X_train)
     X_test = clean_nan_inf(X_test)
-
     print("NaN & Inf values cleaned.")
-
+    if X_val is not None:
+        X_val = clean_nan_inf(X_val)
+        return X_train, X_test, X_val
     return X_train, X_test
 
-def minmax_fit_transform_per_feature(X_train: np.ndarray, X_test: np.ndarray):
+def minmax_fit_transform_per_feature(X_train: np.ndarray, X_test: np.ndarray, X_val: np.ndarray = None):
     """
     MinMax normalize each feature/channel independently.
     Assumes X shape: (N, T, C)
-
+    Fits on train only, transforms train/test/val.
     Returns:
       X_train_normalized, X_test_normalized, scalers
+      (+ X_val_normalized if X_val provided)
     """
     if X_train.ndim != 3:
         raise ValueError(f"Expected X_train shape (N, T, C), got {X_train.shape}")
     if X_test.ndim != 3:
         raise ValueError(f"Expected X_test shape (N, T, C), got {X_test.shape}")
 
-    num_samples, num_timesteps, num_features = X_train.shape
-
+    num_features = X_train.shape[2]
     scalers = [MinMaxScaler() for _ in range(num_features)]
 
     X_train_normalized = np.array([
@@ -66,6 +66,13 @@ def minmax_fit_transform_per_feature(X_train: np.ndarray, X_test: np.ndarray):
     ]).transpose(1, 2, 0)
 
     print("Data normalization complete (MinMax per feature).")
+
+    if X_val is not None:
+        X_val_normalized = np.array([
+            scalers[i].transform(X_val[:, :, i]) for i in range(num_features)
+        ]).transpose(1, 2, 0)
+        return X_train_normalized, X_test_normalized, X_val_normalized, scalers
+
     return X_train_normalized, X_test_normalized, scalers
 
 def one_hot_encode_labels(y_train, y_val, y_test):
